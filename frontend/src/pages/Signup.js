@@ -22,33 +22,38 @@ function Signup() {
     }
 
     const handleSignup = async (e) => {
-        e.preventDefault();
-        const { name, email, password } = signupInfo;
-        if (!name || !email || !password) {
-            return handleError('name, email and password are required')
-        }
-        try {
-            const url = `https://deploy-gulab-user-authentication-ap.vercel.app/auth/signup`;
-            const response = await fetch(url, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(signupInfo)
-            });
-            const result = await response.json();
-            const { success, message, error } = result;
+    e.preventDefault();
 
-            if (success) {
-                handleSuccess(message);
-                setTimeout(() => navigate('/login'), 1000)
-            } else if (error) {
-                handleError(error?.details[0].message);
-            } else {
-                handleError(message);
-            }
-        } catch (err) {
-            handleError(err);
-        }
+    const { name, email, password } = signupInfo;
+    if (!name || !email || !password) {
+        return handleError('name, email and password are required');
     }
+
+    try {
+        const url = `https://deploy-gulab-user-authentication-ap.vercel.app/auth/signup`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signupInfo)
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) {
+            handleError(result.message || 'Signup failed');
+            return;
+        }
+
+        handleSuccess(result.message || 'Signup successful');
+        setTimeout(() => navigate('/login'), 1000);
+
+    } catch (err) {
+        handleError('Something went wrong');
+        console.error(err);
+    }
+};
 
     return (
         <div className="signup-page">
