@@ -27,7 +27,7 @@ function Login() {
             return handleError('email and password are required')
         }
         try {
-            const url = "http://localhost:5000/auth/login";
+            const url = `https://deploy-gulab-user-authentication-ap.vercel.app/auth/login`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
