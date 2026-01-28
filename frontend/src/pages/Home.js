@@ -22,7 +22,7 @@ function Home() {
 
     const fetchProducts = async () => {
         try {
-            const url = "http://localhost:3000/products";
+            const url = "https://deploy-gulab-user-authentication-ap.vercel.app/products";
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
